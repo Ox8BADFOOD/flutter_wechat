@@ -10,6 +10,8 @@ class WeChatApp extends StatelessWidget {
       color: Colors.pink,
       theme: ThemeData(
           primaryColor:Colors.black,
+          splashColor: Color.fromRGBO(0, 0, 0, 0),
+          highlightColor: Color.fromRGBO(0, 0, 0, 0),
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: ZZRouter.initialRouter,

@@ -16,11 +16,25 @@ class ZZMainScreen extends StatefulWidget {
 
 class _State extends State<ZZMainScreen> {
   int _currentIndex = 0;
+  final _titles = ["微信", "通讯录", "发现", ""];
+  String _currentTitle = "微信";
   final items = [
-    BottomNavigationBarItem(icon:Icon(Icons.message) ,label:"微信"),
-    BottomNavigationBarItem(icon: Icon(Icons.assignment_ind_outlined),label:"通讯录"),
-    BottomNavigationBarItem(icon: Icon(Icons.assistant_navigation),label:"发现"),
-    BottomNavigationBarItem(icon: Icon(Icons.person),label:"我")
+    BottomNavigationBarItem(
+        icon: createIcon("bubble", Colors.white),
+        activeIcon: createIcon("bubble", Colors.green),
+        label: "微信"),
+    BottomNavigationBarItem(
+        icon: createIcon("contact", Colors.white),
+        activeIcon: createIcon("contact", Colors.green),
+        label: "通讯录"),
+    BottomNavigationBarItem(
+        icon: createIcon("discover", Colors.white),
+        activeIcon: createIcon("discover", Colors.green),
+        label: "发现"),
+    BottomNavigationBarItem(
+        icon: createIcon("me", Colors.white),
+        activeIcon: createIcon("me", Colors.green),
+        label: "我"),
   ];
 
   final children = [
@@ -29,34 +43,52 @@ class _State extends State<ZZMainScreen> {
     DiscoverScreen(),
     MeScreen()
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("wechat"),
+        // title: Text("wechat"),
+        leadingWidth: 100,
+        leading: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 10, 0, 0),
+          child: Text(
+            _currentTitle,
+            style: TextStyle(fontSize: 17),
+            maxLines: 1,
+          ),
+        ),
       ),
       body: IndexedStack(
         index: _currentIndex,
         children: children,
-      ),//WeChatHomeBody(),
+      ), //WeChatHomeBody(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         selectedItemColor: Colors.green,
         unselectedItemColor: Colors.white,
-        selectedLabelStyle: TextStyle(color: Colors.green,fontSize: 15),
-        unselectedLabelStyle: TextStyle(color: Colors.white,fontSize: 15),
+        selectedLabelStyle: TextStyle(color: Colors.green, fontSize: 15),
+        unselectedLabelStyle: TextStyle(color: Colors.white, fontSize: 15),
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.black,
         items: items,
-        onTap: (value){
+        onTap: (value) {
           setState(() {
             print("value:${value}");
             _currentIndex = value;
+            _currentTitle = _titles[value];
           });
         },
       ),
     );
   }
+}
 
-
+Image createIcon(String name, Color color) {
+  return Image.asset(
+    "assets/img/$name.png",
+    width: 20,
+    height: 20,
+    color: color,
+  );
 }
