@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wechat/ui/screen/main_screen.dart';
+import 'package:flutter_wechat/ui/screen/main/main_screen.dart';
 
 class ZZRouter{
   //跟页面

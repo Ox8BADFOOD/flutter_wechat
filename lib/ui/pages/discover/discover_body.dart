@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wechat/ui/shared/app_theme.dart';
 
 class DiscoverBody extends StatelessWidget {
+
   final items = [
     {"title": "朋友圈", "img": "assets/img/moments.png"},
     {"title": "视频号", "img": "assets/img/movie.png"},
@@ -25,7 +27,7 @@ class DiscoverBody extends StatelessWidget {
           itemCount: 10,
         ),
       ),
-      color: Colors.red,
+      color: Colors.black,
     );
   }
 
@@ -37,19 +39,20 @@ class DiscoverBody extends StatelessWidget {
             items[index]["img"],
             width: 30,
             height: 30,
-            color: Colors.green,
+            color: ZZAppTheme.darkTextColors,
           ),
           title: Text(
             items[index]["title"],
+            style: Theme.of(cxt).textTheme.bodyText1,
           ),
-          trailing: listItemTrailingWidget(index),
+          trailing: listItemTrailingWidget(cxt,index),
         ),
-        color: Colors.white,
+        color: ZZAppTheme.cellColors,
       );
     };
   }
 
-  Widget listItemTrailingWidget(int index) {
+  Widget listItemTrailingWidget(BuildContext cxt,int index) {
     String title;
     bool offstage = true;
     switch (index) {
@@ -71,28 +74,21 @@ class DiscoverBody extends StatelessWidget {
         }
     }
     return Container(
-      width: 180,
+      width: 190,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Offstage(
-            offstage: offstage,
-            child: Image.network(
-              "https://c-ssl.duitang.com/uploads/blog/202010/14/20201014114715_23f13.png",
-              width: 30,
-              height: 30,
-            ),
-          ),
+          OffstageListItemTrailingImg(offstage: offstage),
           Text(
             title,
-            style: TextStyle(color: Colors.black38),
+            style: Theme.of(cxt).textTheme.bodyText1,
             overflow: TextOverflow.ellipsis,
           ),
           Image.asset(
             "assets/img/more.png",
             width: 20,
             height: 15,
-            color: Colors.black38,
+            color: ZZAppTheme.darkTextColors,
           ),
         ],
       ),
@@ -131,6 +127,47 @@ class DiscoverBody extends StatelessWidget {
           color: Color.fromRGBO(0, 0, 0, 0),
         )
       ],
+    );
+  }
+}
+
+class OffstageListItemTrailingImg extends StatelessWidget {
+  const OffstageListItemTrailingImg({
+    Key key,
+    @required this.offstage,
+  }) : super(key: key);
+
+  final bool offstage;
+
+  @override
+  Widget build(BuildContext context) {
+    return Offstage(
+      offstage: offstage,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+        child: ListItemTrailingImg(),
+      ),
+    );
+  }
+}
+
+class ListItemTrailingImg extends StatelessWidget {
+  const ListItemTrailingImg({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(3))
+      ),
+      child:Image.network(
+        "https://c-ssl.duitang.com/uploads/blog/202010/14/20201014114715_23f13.png",
+        width: 30,
+        height: 30,
+      ),
     );
   }
 }
